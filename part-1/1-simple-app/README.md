@@ -22,7 +22,7 @@ Containerization offers several benefits:
 - **Images**: Images are standalone, executable, and self-sufficient packages containing everything needed to run a project, including its dependencies and configurations.
 - **Containers**: Containers are running instances of images in isolated environments, providing a consistent execution environment for applications.
 
-### Layers and Layer Changes
+## Layers and Layer Changes
 
 - **Layered Filesystem**: Docker images use a layered filesystem to capture changes incrementally.
 - **Copy-on-Write**: Layer changes are managed through a copy-on-write strategy, storing only differences.
@@ -30,22 +30,72 @@ Containerization offers several benefits:
 - **Command Order**: The order of commands in a Dockerfile impacts layer caching efficiency, with volatile commands ideally placed last.
 
  
+## Networks & Volumes
 
+These components are crucial for Docker container management:
+
+### Volumes
+- Preserve data across container restarts.
+- Facilitate data sharing between containers or with the host machine.
+
+### Networks
+- Enable seamless communication between containers.
+- Note: Each container operates within its own network, separate from the host's network.
+
+![Overview](image-1.png)
+
+![Illustration](image-2.png)
 
 
 ## Development vs. Production Stages
 
 Dockerfiles can define distinct stages for development and production environments. This allows for different dependencies and configurations based on the deployment stage.
 
-## Docker Commands
+ 
+## Dockerfile (Example)
+This Dockerfile example demonstrates a multi-stage build for a Node.js application. It starts with a base stage, installing dependencies and adding nano as a development tool. Then, it splits into development and production stages, copying the application code and defining the appropriate commands for each environment.
 
-Docker commands are used to manage Docker images and containers. They automate the deployment and scaling of applications, making it easier to manage complex software environments.
+### Dockerfile Example
 
-### Example:
-- `docker build`: Builds a Docker image from a Dockerfile.
-- `docker run`: Creates and runs a Docker container based on a specified image.
-- `docker network`: Manages Docker networks, allowing containers to communicate with each other.
-- `docker volume`: Manages Docker volumes, providing persistent storage for containers.
+```Dockerfile
+FROM mhart/alpine-node as base
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+
+# Install nano
+RUN apk --no-cache add nano
+
+FROM base AS development
+COPY . .
+CMD ["npm", "run", "dev"]
+
+FROM base AS production
+COPY . .
+RUN npm prune --production
+CMD ["npm", "run", "start"]
+
+
+# Dockerfile (Example)
+## Build Development Image
+docker build --target development -t anas1005/demo-repo:dev .
+
+## Build Production Image
+docker build --target production -t anas1005/demo-repo:prod .
+
+## Create Network
+docker network create nw1
+
+# #Create Volume
+docker volume create vol1
+
+## Run MongoDB Container
+docker run -v vol1:/data/db --name mongo1 --network nw1 -p 27017:27017 mongo
+
+## Run Application Container
+docker run -p 3000:3000 -v .:/usr/src/app --name back1 --network nw1 anas1005/demo-repo:dev
+
+
 
 ## Docker Compose
 
