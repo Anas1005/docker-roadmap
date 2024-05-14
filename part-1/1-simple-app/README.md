@@ -57,7 +57,7 @@ This Dockerfile example demonstrates a multi-stage build for a Node.js applicati
 
 ### Dockerfile Example
 
-```Dockerfile
+```bash
 FROM mhart/alpine-node as base
 WORKDIR /usr/src/app
 COPY package*.json ./
@@ -74,6 +74,8 @@ FROM base AS production
 COPY . .
 RUN npm prune --production
 CMD ["npm", "run", "start"]
+```
+
 
 
 # Dockerfile (Example)
@@ -97,7 +99,7 @@ docker run -p 3000:3000 -v .:/usr/src/app --name back1 --network nw1 anas1005/de
 
 
 
-## Docker Compose
+## Docker Compose (Simplifies creating Image and running multple containers)
 
 Docker Compose is a tool for defining and running multi-container Docker applications. It simplifies the management of interconnected services, ensuring consistent environments and easy scalability.
 
@@ -123,3 +125,4 @@ services:
 
 volumes:
   vol1:
+```
