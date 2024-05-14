@@ -22,6 +22,16 @@ Containerization offers several benefits:
 - **Images**: Images are standalone, executable, and self-sufficient packages containing everything needed to run a project, including its dependencies and configurations.
 - **Containers**: Containers are running instances of images in isolated environments, providing a consistent execution environment for applications.
 
+### Layers and Layer Changes
+
+- **Layered Filesystem**: Docker images use a layered filesystem to capture changes incrementally.
+- **Copy-on-Write**: Layer changes are managed through a copy-on-write strategy, storing only differences.
+- **Layer Caching**: Docker optimizes image builds by caching unchanged layers for reuse.
+- **Command Order**: The order of commands in a Dockerfile impacts layer caching efficiency, with volatile commands ideally placed last.
+
+ 
+
+
 
 ## Development vs. Production Stages
 
