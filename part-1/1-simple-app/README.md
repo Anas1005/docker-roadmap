@@ -29,7 +29,37 @@ Containerization offers several benefits:
 - **Layer Caching**: Docker optimizes image builds by caching unchanged layers for reuse.
 - **Command Order**: The order of commands in a Dockerfile impacts layer caching efficiency, with volatile commands ideally placed last.
 
- 
+
+## Port Mapping
+
+Port mapping in Docker enables communication between containers and the host system or external network by binding container ports to specific ports on the host machine.
+
+- **Purpose**: Allows services within containers to be accessed from outside.
+- **Syntax**: Follows the pattern `-p [hostPort]:[containerPort]`.
+- **Example**: `-p 8080:80` maps container port 80 to host port 8080.
+
+Port mapping is essential for making Docker containers accessible and usable in various network environments.
+
+## Bind Mounts
+
+Bind mounts in Docker allow you to map a folder from the host machine to a folder in the container. This enables seamless sharing and synchronization of files between the host and the container.
+
+- **Purpose**: Mainly used for hot-reloading, where code changes on the host are immediately reflected in the container without needing to rebuild the image.
+- **Usage**: Syntax for bind mounts typically involves specifying the source directory on the host followed by the target directory in the container.
+- **Example**: `-v /host/folder:/container/folder` maps the `/host/folder` on the host to `/container/folder` in the container.
+
+
+## Bind Mounts
+
+Bind mounts in Docker allow you to map a folder from the host machine to a folder in the container. This enables seamless sharing and synchronization of files between the host and the container.
+
+- **Purpose**: Mainly used for hot-reloading, where code changes on the host are immediately reflected in the container without needing to rebuild the image.
+- **Usage**: Indispensable for development environments, facilitating rapid iteration and testing by providing real-time synchronization of code changes between the host and the container.
+- **Example**: `-v /host/folder:/container/folder` maps the `/host/folder` on the host to `/container/folder` in the container.
+
+.
+
+
 ## Networks & Volumes
 
 These components are crucial for Docker container management:
@@ -78,23 +108,23 @@ CMD ["npm", "run", "start"]
 
 
 
-# Dockerfile (Example)
-## Build Development Image
+# Docker commands to create above Image and start running multiple containers.
+### Build Development Image
 docker build --target development -t anas1005/demo-repo:dev .
 
-## Build Production Image
+### Build Production Image
 docker build --target production -t anas1005/demo-repo:prod .
 
-## Create Network
+### Create Network
 docker network create nw1
 
-# #Create Volume
+### Create Volume
 docker volume create vol1
 
-## Run MongoDB Container
+### Run MongoDB Container
 docker run -v vol1:/data/db --name mongo1 --network nw1 -p 27017:27017 mongo
 
-## Run Application Container
+### Run Application Container
 docker run -p 3000:3000 -v .:/usr/src/app --name back1 --network nw1 anas1005/demo-repo:dev
 
 
@@ -126,3 +156,6 @@ services:
 volumes:
   vol1:
 ```
+
+## sa
+kkmksmak
