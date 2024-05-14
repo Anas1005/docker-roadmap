@@ -45,15 +45,6 @@ Port mapping is essential for making Docker containers accessible and usable in 
 Bind mounts in Docker allow you to map a folder from the host machine to a folder in the container. This enables seamless sharing and synchronization of files between the host and the container.
 
 - **Purpose**: Mainly used for hot-reloading, where code changes on the host are immediately reflected in the container without needing to rebuild the image.
-- **Usage**: Syntax for bind mounts typically involves specifying the source directory on the host followed by the target directory in the container.
-- **Example**: `-v /host/folder:/container/folder` maps the `/host/folder` on the host to `/container/folder` in the container.
-
-
-## Bind Mounts
-
-Bind mounts in Docker allow you to map a folder from the host machine to a folder in the container. This enables seamless sharing and synchronization of files between the host and the container.
-
-- **Purpose**: Mainly used for hot-reloading, where code changes on the host are immediately reflected in the container without needing to rebuild the image.
 - **Usage**: Indispensable for development environments, facilitating rapid iteration and testing by providing real-time synchronization of code changes between the host and the container.
 - **Example**: `-v /host/folder:/container/folder` maps the `/host/folder` on the host to `/container/folder` in the container.
 
