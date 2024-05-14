@@ -1,14 +1,16 @@
-FROM node:20
-
+FROM mhart/alpine-node as base
 WORKDIR /usr/src/app
-
-COPY . .
-
+COPY package*.json ./
 RUN npm install
 
-EXPOSE 3000
+# Install nano
+RUN apk --no-cache add nano
 
-CMD ["node", "index.js"]
+FROM base AS development
+COPY . .
+CMD ["npm", "run", "dev"]
 
-
-
+FROM base AS production
+COPY . .
+RUN npm prune --production
+CMD ["npm", "run", "start"]
