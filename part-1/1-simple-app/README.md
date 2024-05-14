@@ -147,6 +147,3 @@ services:
 volumes:
   vol1:
 ```
-
-## sa
-kkmksmak
